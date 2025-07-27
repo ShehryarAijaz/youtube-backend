@@ -1,12 +1,21 @@
-import ApiResponse from "./ApiResponse";
-import ApiError from "./ApiError";
+import ApiResponse from "./ApiResponse.js";
+import ApiError from "./ApiError.js";
 
 const asyncHandler = (fn) => async (req, res, next) => {
     try{
         await fn(req, res, next)
-        res.status(200).json(new ApiResponse(200, res.jsonData, res.jsonMessage))
+        res.status(200).json(new ApiResponse(
+            200,
+            res.jsonData || null,
+            res.jsonMessage || "Success"
+        ))
     } catch (error) {
-        res.status(500).json(new ApiError(error.code, error.message, error.errors, error.stack))
+        res.status(500).json(new ApiError(
+            error.code || 500,
+            error.message || "Something went wrong",
+            error.errors || null,
+            error.stack || null
+        ))
     }
 }
 
