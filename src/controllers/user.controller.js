@@ -4,6 +4,11 @@ import ApiResponse from '../utils/ApiResponse.js';
 import { User } from '../models/user.model.js';
 import uploadOnCloudinary from '../utils/cloudinary.js';
 
+const options = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production"
+}
+
 const generateTokens = async (userId) => {
     try{
         const user = await User.findById(userId)
@@ -80,7 +85,7 @@ const loginUser = asyncHandler( async(req, res) => {
     const { username, password } = req.body;
     console.log(username, password);
     
-    if (!username || !password) {
+    if (!(username || password)) {
         throw new ApiError(400, "All fields are required")
     }
 
@@ -104,11 +109,6 @@ const loginUser = asyncHandler( async(req, res) => {
 
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
-    const options = {
-        httpOnly: true,
-        secure: true
-    }
-
     return res.status(200).
     cookie("accessToken", accessToken, { ...options, maxAge: 1000 * 60 * 15 }).
     cookie("refreshToken", refreshToken, { ...options, maxAge: 1000 * 60 * 60 * 24 * 30 }).
@@ -120,18 +120,13 @@ const logoutUser = asyncHandler( async(req, res) => {
         req.user._id,
         {
             $set: {
-                refreshToken: undefined
+                refreshToken: null
             }
         },
         {
             new: true
         }
     )
-
-    const options = {
-        httpOnly: true,
-        secure: true
-    }
 
     return res.status(200).
     clearCookie("accessToken", { ...options, maxAge: 0 }).

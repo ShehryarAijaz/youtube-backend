@@ -17,3 +17,13 @@ export const env = {
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
     CORS_ORIGIN: process.env.CORS_ORIGIN
 };
+
+console.log("PORT", env.PORT);
+console.log("NODE_ENV", env.NODE_ENV);
+console.log("MONGODB_URI", env.MONGODB_URI);
+console.log("ACCESS_TOKEN_SECRET", env.ACCESS_TOKEN_SECRET);
+console.log("REFRESH_TOKEN_SECRET", env.REFRESH_TOKEN_SECRET);
+console.log("CLOUDINARY_CLOUD_NAME", env.CLOUDINARY_CLOUD_NAME);
+console.log("CLOUDINARY_API_KEY", env.CLOUDINARY_API_KEY);
+console.log("CLOUDINARY_API_SECRET", env.CLOUDINARY_API_SECRET);
+console.log("CORS_ORIGIN", env.CORS_ORIGIN);
