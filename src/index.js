@@ -1,7 +1,7 @@
-import './config/env.js';
+import './config/env.config.js';
 import connectDB from './db/index.js';
 import app from './app.js';
-import { env } from './config/env.js';
+import { env } from './config/env.config.js';
 
 connectDB()
     .then(() => {

@@ -1,6 +1,6 @@
 import asyncHandler from '../utils/asyncHandler.js';
-import ApiError from '../utils/ApiError.js';
-import ApiResponse from '../utils/ApiResponse.js';
+import { ApiError } from '../utils/ApiError.js';
+import { ApiResponse } from '../utils/ApiResponse.js';
 import { User } from '../models/user.model.js';
 import uploadOnCloudinary from '../utils/cloudinary.js';
 
@@ -12,18 +12,13 @@ const options = {
 const generateTokens = async (userId) => {
     try{
         const user = await User.findById(userId)
+        const accessToken = user.generateAccessToken()
+        const refreshToken = user.generateRefreshToken()
 
-        if (user) {
-            const accessToken = user.generateAccessToken()
-            const refreshToken = user.generateRefreshToken()
+        user.refreshToken = refreshToken
+        await user.save({ validateBeforeSave: false })
 
-            user.refreshToken = refreshToken
-            await user.save({ validateBeforeSave: false })
-
-            return { accessToken, refreshToken }
-        }
-
-        return null
+        return { accessToken, refreshToken }
     } catch (error) {
         throw new ApiError(500, "Something went wrong while generating tokens")
     }
@@ -82,16 +77,15 @@ const registerUser = asyncHandler( async(req, res) => {
 } )
 
 const loginUser = asyncHandler( async(req, res) => {
-    const { username, password } = req.body;
+    const { username, email, password } = req.body;
     console.log(username, password);
     
-    if (!(username || password)) {
+    if (!(username || email || password)) {
         throw new ApiError(400, "All fields are required")
     }
 
     const user = await User.findOne({
-        $or: [{ username: username.toLowerCase() },
-            { email: username.toLowerCase() }]
+        $or: [{ username }, { email }]
         })
     console.log(user);
 
@@ -110,8 +104,8 @@ const loginUser = asyncHandler( async(req, res) => {
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
     return res.status(200).
-    cookie("accessToken", accessToken, { ...options, maxAge: 1000 * 60 * 15 }).
-    cookie("refreshToken", refreshToken, { ...options, maxAge: 1000 * 60 * 60 * 24 * 30 }).
+    cookie("accessToken", accessToken, options).
+    cookie("refreshToken", refreshToken, options).
     json(new ApiResponse(200, { user: loggedInUser, accessToken, refreshToken }, "User logged in successfully"))
 } )
 
@@ -129,8 +123,8 @@ const logoutUser = asyncHandler( async(req, res) => {
     )
 
     return res.status(200).
-    clearCookie("accessToken", { ...options, maxAge: 0 }).
-    clearCookie("refreshToken", { ...options, maxAge: 0 }).
+    clearCookie("accessToken", options).
+    clearCookie("refreshToken", options).
     json(new ApiResponse(200, null, "User logged out successfully"))
 } )
 

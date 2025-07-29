@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from 'fs';
-import { env } from '../config/env.js';
+import { env } from '../config/env.config.js';
 
 cloudinary.config({
         cloud_name: env.CLOUDINARY_CLOUD_NAME,
@@ -20,7 +20,10 @@ const uploadHandler = async (localFilePath) => {
             }
         )
         // console.log("File uploaded successfully", response.url);
+        
+        await new Promise(resolve => setTimeout(resolve, 6000));
         fs.unlinkSync(localFilePath)
+
         return response;
     } catch (error) {
         fs.unlinkSync(localFilePath);
