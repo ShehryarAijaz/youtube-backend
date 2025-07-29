@@ -2,6 +2,7 @@ import { User } from "../models/user.model.js";
 import asyncHandler from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
 import { ApiError } from "../utils/ApiError.js";
+import { env } from "../config/env.config.js";
 
 export const verifyJWT = asyncHandler( async(req, _, next) => {
     try {
@@ -29,3 +30,25 @@ export const verifyJWT = asyncHandler( async(req, _, next) => {
         throw new ApiError(500, "Something went wrong while verifying JWT")
     }
 } )
+
+export const verifyRefreshToken = asyncHandler(async (req, res, next) => {
+    try {
+        const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
+
+        if (!incomingRefreshToken) {
+            throw new ApiError(401, "Unauthorized request");
+        }
+
+        const decoded = await jwt.verify(incomingRefreshToken, env.REFRESH_TOKEN_SECRET);
+
+        if (!decoded) {
+            throw new ApiError(401, "Unauthorized request");
+        }
+
+        req.decodedRefreshToken = decoded;
+        req.refreshToken = incomingRefreshToken;
+        next();
+    } catch (error) {
+        throw new ApiError(500, "Something went wrong while verifying refresh token");
+    }
+});

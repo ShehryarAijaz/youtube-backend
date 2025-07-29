@@ -3,10 +3,11 @@ import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { User } from '../models/user.model.js';
 import uploadOnCloudinary from '../utils/cloudinary.js';
+import { env } from '../config/env.config.js';
 
 const options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production"
+    secure: env.NODE_ENV === "production" || env.NODE_ENV === "development",
 }
 
 const generateTokens = async (userId) => {
@@ -128,4 +129,29 @@ const logoutUser = asyncHandler( async(req, res) => {
     json(new ApiResponse(200, null, "User logged out successfully"))
 } )
 
-export { registerUser, loginUser, logoutUser };
+const refreshAccessToken = asyncHandler( async(req, res) => {
+  
+    const decoded = req.decodedRefreshToken
+
+    const user = await User.findById(decoded._id)
+
+    if (!user) {
+        throw new ApiError(404, "User not found")
+    }
+
+    const isRefreshTokenValid = user.refreshToken === req.refreshToken
+
+    if (!isRefreshTokenValid) {
+        throw new ApiError(401, "Unauthorized request")
+    }
+
+    const { newAccessToken, newRefreshToken } = await generateTokens(user._id)
+
+    return res.status(200).
+    cookie("accessToken", newAccessToken, options).
+    cookie("refreshToken", newRefreshToken, options).
+    json(new ApiResponse(200, { accessToken: newAccessToken, refreshToken: newRefreshToken }, "Access token refreshed successfully"))
+    
+} )
+
+export { registerUser, loginUser, logoutUser, refreshAccessToken };
