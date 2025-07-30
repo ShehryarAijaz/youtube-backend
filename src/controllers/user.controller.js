@@ -247,12 +247,17 @@ const updateUserAvatar = asyncHandler( async(req, res) => {
 
 const updateUserCoverImage = asyncHandler( async(req, res) => {
     const coverImageLocalPath = req.file?.path;
+    const oldCoverImage = req.user?.coverImage;
 
     if (!coverImageLocalPath) {
         throw new ApiError(400, "Cover image is required")
     }
 
     const coverImageUpload = await uploadOnCloudinary(coverImageLocalPath);
+    
+    if (!oldCoverImage) {
+        throw new ApiError(400, "Old cover image not found")
+    }
     
     const user = await User.findByIdAndUpdate(
         req.user?._id,
@@ -263,6 +268,8 @@ const updateUserCoverImage = asyncHandler( async(req, res) => {
         },
         { new: true }
     ).select("-password -refreshToken")
+
+    await deleteFromCloudinary(oldCoverImage.split('/').pop().split('.')[0]);
 
     if (!user) {
         throw new ApiError(404, "User not found")

@@ -19,7 +19,6 @@ const uploadOnCloudinary = async (localFilePath) => {
                 resource_type: "auto",
             }
         )
-        // console.log("File uploaded successfully", response.url);
         
         await new Promise(resolve => setTimeout(resolve, 6000));
         fs.unlinkSync(localFilePath)
@@ -32,8 +31,6 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
-// http://res.cloudinary.com/ddls25k09/image/upload/v1753785002/ei4ydmqyra6nt248td7r.jpg
-
 const deleteFromCloudinary = async (publicId) => {
     try {
         if (!publicId) return null;
@@ -43,8 +40,6 @@ const deleteFromCloudinary = async (publicId) => {
                 resource_type: "image",
             }
         )
-
-        console.log("File deleted successfully", response);
 
         return response;
     } catch (error) {
