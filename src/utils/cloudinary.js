@@ -8,7 +8,7 @@ cloudinary.config({
         api_secret: env.CLOUDINARY_API_SECRET
     })
 
-const uploadHandler = async (localFilePath) => {
+const uploadOnCloudinary = async (localFilePath) => {
     try {
         if (!localFilePath) return null;
 
@@ -32,4 +32,24 @@ const uploadHandler = async (localFilePath) => {
     }
 }
 
-export default uploadHandler;
+// http://res.cloudinary.com/ddls25k09/image/upload/v1753785002/ei4ydmqyra6nt248td7r.jpg
+
+const deleteFromCloudinary = async (publicId) => {
+    try {
+        if (!publicId) return null;
+
+        const response = await cloudinary.uploader.destroy(publicId,
+            {
+                resource_type: "image",
+            }
+        )
+
+        console.log("File deleted successfully", response);
+
+        return response;
+    } catch (error) {
+        console.log("Error deleting file", error);
+    }
+}
+
+export { uploadOnCloudinary, deleteFromCloudinary };

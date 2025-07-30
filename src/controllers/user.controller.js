@@ -2,7 +2,7 @@ import asyncHandler from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { User } from '../models/user.model.js';
-import uploadOnCloudinary from '../utils/cloudinary.js';
+import { uploadOnCloudinary, deleteFromCloudinary } from '../utils/cloudinary.js';
 import { env } from '../config/env.config.js';
 
 const options = {
@@ -209,6 +209,7 @@ const updateAccountDetails = asyncHandler( async(req, res) => {
 
 const updateUserAvatar = asyncHandler( async(req, res) => {
     const avatarLocalPath = req.file?.path;
+    const oldAvatar = req.user?.avatar;
 
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar is required")
@@ -220,6 +221,10 @@ const updateUserAvatar = asyncHandler( async(req, res) => {
         throw new ApiError(400, "Avatar upload failed")
     }
 
+    if (!oldAvatar) {
+        throw new ApiError(400, "Old avatar not found")
+    }
+    
     const user = await User.findByIdAndUpdate(
         req.user?._id,
         {
@@ -229,6 +234,8 @@ const updateUserAvatar = asyncHandler( async(req, res) => {
         },
         { new: true }
     ).select("-password -refreshToken")
+    
+    await deleteFromCloudinary(oldAvatar.split('/').pop().split('.')[0]);
 
     if (!user) {
         throw new ApiError(404, "User not found")
