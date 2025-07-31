@@ -21,7 +21,7 @@ const likeSchema = new Schema({
         ref: "Tweet",
         required: true
     }
-})
+}, { timestamps: true })
 
 const Like = model("Like", likeSchema);
 

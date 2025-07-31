@@ -23,7 +23,7 @@ const playlistSchema = new Schema({
         ref: "User",
         required: true
     }
-})
+}, { timestamps: true })
 
 const Playlist = model("Playlist", playlistSchema);
 

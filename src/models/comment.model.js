@@ -17,7 +17,7 @@ const commentSchema = new Schema({
         ref: "User",
         required: true
     }
-})
+}, { timestamps: true })
 
 const Comment = model("Comment", commentSchema);
 
