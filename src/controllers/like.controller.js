@@ -4,7 +4,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
 import { Video } from "../models/video.model.js";
-import Like from "../models/like.model.js";
+import { Like } from "../models/like.model.js";
 import { Comment } from "../models/comment.model.js";
 
 const toggleVideoLike = asyncHandler( async(req, res) => {

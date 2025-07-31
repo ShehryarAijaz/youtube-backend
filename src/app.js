@@ -15,8 +15,11 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }))
 app.use(express.static("public"))
 app.use(cookieParser())
 
-app.get('/test', (req, res) => {
-    res.send('<h1>Hello World</h1>')
+app.get('/api/status', (req, res) => {
+    res.json({
+        status: 'ok',
+        message: 'Api is running'
+    })
 })
 
 // routes
