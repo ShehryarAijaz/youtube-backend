@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { env } from './config/env.config.js';
+import { healthCheck } from './controllers/healthcheck.controller.js';
 
 const app = express();
 
@@ -15,12 +16,7 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }))
 app.use(express.static("public"))
 app.use(cookieParser())
 
-app.get('/api/status', (req, res) => {
-    res.json({
-        status: 'ok',
-        message: 'Api is running'
-    })
-})
+app.use('/api/v1/healthcheck', healthCheck);
 
 // routes
 import userRoutes from './routes/user.routes.js';
