@@ -21,8 +21,10 @@ app.get('/test', (req, res) => {
 
 // routes
 import userRoutes from './routes/user.routes.js';
+import commentRoutes from './routes/comment.routes.js'
 
 // routes declaration
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/comments', commentRoutes)
 
 export default app;
