@@ -104,7 +104,7 @@ const updateComment = asyncHandler(  async(req, res) => {
         commentId,
         {
             $set: {
-                comment: content
+                content: content
             }
         },
         {
