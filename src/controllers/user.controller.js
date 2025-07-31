@@ -80,7 +80,6 @@ const registerUser = asyncHandler( async(req, res) => {
 
 const loginUser = asyncHandler( async(req, res) => {
     const { username, email, password } = req.body;
-    console.log(username, password);
     
     if (!(username || email || password)) {
         throw new ApiError(400, "All fields are required")
@@ -89,7 +88,6 @@ const loginUser = asyncHandler( async(req, res) => {
     const user = await User.findOne({
         $or: [{ username }, { email }]
         })
-    console.log(user);
 
     if (!user) {
         throw new ApiError(404, "User not found")
@@ -116,7 +114,7 @@ const logoutUser = asyncHandler( async(req, res) => {
         req.user._id,
         {
             $unset: {
-                refreshToken: undefined
+                refreshToken: 1
             }
         },
         {
