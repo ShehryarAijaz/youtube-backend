@@ -20,7 +20,7 @@ const uploadOnCloudinary = async (localFilePath) => {
             }
         )
         
-        await new Promise(resolve => setTimeout(resolve, 6000));
+
         fs.unlinkSync(localFilePath)
 
         return response;

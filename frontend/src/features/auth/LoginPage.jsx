@@ -1,9 +1,18 @@
 import { useState } from "react";
+import {
+    Card,
+    CardAction,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { loginUser } from "./api";
 import { useAuthStore } from "@/store/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
     const setUser = useAuthStore((state) => state.setUser)
@@ -59,8 +68,20 @@ export default function LoginPage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
+            <Card className="w-full max-w-sm">
+                <CardHeader>
+                    <CardTitle>Login</CardTitle>
+                    <CardDescription>
+                        Enter your details to login
+                    </CardDescription>
+                    <CardAction>
+                        <Button variant="link" asChild>
+                            <Link to="/register">Register</Link>
+                        </Button>
+                    </CardAction>
+                </CardHeader>
+                <CardContent>
             <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
-                <h1 className="text-2xl font-bold">Login</h1>
                 <Input
                     name="username"
                     placeholder="Username"
@@ -89,6 +110,8 @@ export default function LoginPage() {
                     {loading ? "Logging in..." : "Login"}
                 </Button>
             </form>
+            </CardContent>
+            </Card>
         </div>
     )
 }
