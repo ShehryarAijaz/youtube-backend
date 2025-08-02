@@ -6,9 +6,11 @@ import { uploadOnCloudinary, deleteFromCloudinary } from '../utils/cloudinary.js
 import { env } from '../config/env.config.js';
 import mongoose from 'mongoose';
 
+const isProduction = env.NODE_ENV === "production"
+
 const options = {
     httpOnly: true,
-    secure: env.NODE_ENV === "production" || env.NODE_ENV === "development",
+    secure: isProduction ? "Strict" : "Lax"
 }
 
 const generateTokens = async (userId) => {
@@ -81,7 +83,7 @@ const registerUser = asyncHandler( async(req, res) => {
 const loginUser = asyncHandler( async(req, res) => {
     const { username, email, password } = req.body;
     
-    if (!(username || email || password)) {
+    if (!username || !email || !password) {
         throw new ApiError(400, "All fields are required")
     }
 
@@ -106,7 +108,7 @@ const loginUser = asyncHandler( async(req, res) => {
     return res.status(200).
     cookie("accessToken", accessToken, options).
     cookie("refreshToken", refreshToken, options).
-    json(new ApiResponse(200, { user: loggedInUser, accessToken, refreshToken }, "User logged in successfully"))
+    json(new ApiResponse(200, { user: loggedInUser, accessToken }, "User logged in successfully"))
 } )
 
 const logoutUser = asyncHandler( async(req, res) => {
