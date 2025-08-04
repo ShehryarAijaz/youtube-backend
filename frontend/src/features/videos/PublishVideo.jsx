@@ -66,8 +66,8 @@ function PublishVideo() {
         setSuccess(true);
         setSuccessMessage(
           response.data.message || "Video published successfully"
-        )
-    }
+        );
+      }
     } catch (error) {
       console.log("Error", error.message);
       setError(error.message);
