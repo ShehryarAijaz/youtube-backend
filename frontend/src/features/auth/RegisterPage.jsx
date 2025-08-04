@@ -95,8 +95,6 @@ export default function RegisterPage() {
 
     console.log("Form Data: ", formData)
 
-    // NEED TO FIX SOME FUNCTIONALITY
-
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
             <Card className="w-full max-w-sm">
