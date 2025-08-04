@@ -40,8 +40,8 @@ export default function LoginPage() {
             console.log("Submitting login with formData:", formData)
             const response = await loginUser(formData)
             console.log("loginUser response:", response)
-            if (response.status === 200) {
-                setUser(response.data.user)
+            if (response && response.user) {
+                setUser(response.user)
                 console.log("User set in store, navigating to /")
                 try {
                     navigate("/")
@@ -63,8 +63,6 @@ export default function LoginPage() {
 
     // Extra logs for debugging
     console.log("formData", formData)
-    console.log("loading", loading)
-    console.log("error", error)
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">

@@ -38,4 +38,27 @@ app.use('/api/v1/videos', videoRoutes);
 app.use('/api/v1/subscriptions', subscriptionRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    
+    // If it's an ApiError, return the proper response
+    if (err.statusCode) {
+        return res.status(err.statusCode).json({
+            statusCode: err.statusCode,
+            message: err.message,
+            success: false,
+            data: null
+        });
+    }
+    
+    // For other errors, return a generic error
+    return res.status(500).json({
+        statusCode: 500,
+        message: "Internal Server Error",
+        success: false,
+        data: null
+    });
+});
+
 export default app;

@@ -8,15 +8,21 @@ export const loginUser = async ({ username, email, password }) => {
             password
         })
 
-        if (response.status === 200) {
-            localStorage.setItem('user', JSON.stringify(response.data.data.user));
+        if (response?.status === 200) {
+            localStorage.setItem('user', JSON.stringify(response.data.user));
             return response.data;
         } else {
             throw new Error(response.data.message);
         }
 
     } catch (error) {
-        throw error.response?.data || error;
+        if (error?.message) {
+            throw error
+        } else if (error?.data?.message) {
+            throw new Error(error.data.message)
+        } else {
+            throw new Error('Login failed')
+        }
     }
 }
 
@@ -28,13 +34,17 @@ export const registerUser = async (formData) => {
             },
         })
 
-        if (response.status === 201) {
+        if (response?.status === 201) {
             localStorage.setItem('user', JSON.stringify(response.data.data))
             return response.data
         } else {
             throw new Error(response.data.message)
         }
-    } catch (error) {
-        throw error.response?.data || error
+    } catch (error) {        
+        if (error?.message) {
+            throw new Error(error.message)
+        } else {
+            throw new Error("Registration failed")
+        }
     }
 }

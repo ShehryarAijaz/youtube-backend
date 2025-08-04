@@ -18,6 +18,7 @@ api.interceptors.response.use(
       };
     },
     (error) => {
+      // Return the error response data which should contain the message
       return Promise.reject(error.response?.data || error);
     }
   );

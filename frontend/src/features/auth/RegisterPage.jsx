@@ -80,22 +80,20 @@ export default function RegisterPage() {
 
         try {
             const response = await registerUser(data)
-            if (response.success) {
-                setUser(response.data)
+            console.log("Response: ", response)
+            if (response && response.email) {
+                setUser(response)
                 navigate("/")
             }
         } catch (error) {
             setError(error.message || "Registration failed")
-            console.error(error)
         } finally {
             setLoading(false)
         }
 
     }
 
-    const triggerFileInput = () => {
-        fileInputRef.current?.click()
-    }
+    console.log("Form Data: ", formData)
 
     // NEED TO FIX SOME FUNCTIONALITY
 
@@ -119,7 +117,7 @@ export default function RegisterPage() {
                         encType="multipart/form-data"
                         className="w-full max-w-md space-y-4">
                         <div className="flex items-center justify-center gap-4">
-                            <label htmlFor="avatar-upload" className="cursor-pointer relative" onClick={triggerFileInput}>
+                            <label htmlFor="avatar-upload" className="cursor-pointer relative">
                                 <Avatar className={`w-16 h-16 border ${!formData.avatar ? 'border-red-500' : 'border-muted'}`}>
                                     <AvatarImage
                                         src={avatarPreview}
