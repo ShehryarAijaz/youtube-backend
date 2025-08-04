@@ -13,10 +13,12 @@ const VideoList = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const data = await getVideos(query);
-        setVideos(data.videos || []);
+        const response = await getVideos(query);
+        console.log("API Response:", response);
+        setVideos(response.data?.videos || []);
       } catch (err) {
         console.error("Error fetching videos:", err.message);
+        setVideos([]);
       } finally {
         setLoading(false);
       }

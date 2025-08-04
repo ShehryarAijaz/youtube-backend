@@ -6,6 +6,7 @@ import HomePage from "@/features/home/HomePage"
 import Navbar from "@/features/navigation/Navbar"
 import UserPage from "@/features/user/UserPage"
 import UpdateAccount from "@/features/user/UpdateAccount"
+import PublishVideo from "@/features/videos/PublishVideo"
 
 export default function AppRouter() {
     return (
@@ -18,6 +19,7 @@ export default function AppRouter() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/user" element={<UserPage />} />
                 <Route path="/update-account" element={<UpdateAccount />} />
+                <Route path="/publish-video" element={<PublishVideo />} />
             </Routes>
         </BrowserRouter>
         </ThemeProvider>

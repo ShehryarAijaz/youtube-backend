@@ -31,8 +31,9 @@ const Navbar = () => {
 
     return (
         <div className="flex justify-between items-center p-4 border-b-2">
-            <h4 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/")}>YouTube Clone</h4>
+            <h4 className="font-bold cursor-pointer" onClick={() => navigate("/")}>YouTube Clone</h4>
             <div className="flex items-center gap-4">
+            <Button onClick={() => navigate("/publish-video")}>Publish Video</Button>
                 {user && <NavigationMenu>
                     <NavigationMenuList>
                         <NavigationMenuItem>
