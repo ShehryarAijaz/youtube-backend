@@ -8,7 +8,7 @@ import {
   CardAction
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { updateAccountDetails, updatePassword } from "./api";
+import { updateAccountDetails, updatePassword } from "@/features/user/api";
 import { useState, useEffect } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";

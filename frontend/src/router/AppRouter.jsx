@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "@/features/auth/LoginPage";
-import RegisterPage from "@/features/auth/RegisterPage";
+import LoginPage from "@/features/auth/components/LoginPage";
+import RegisterPage from "@/features/auth/components/RegisterPage";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import HomePage from "@/features/home/HomePage"
 import Navbar from "@/features/navigation/Navbar"
-import UserPage from "@/features/user/UserPage"
-import UpdateAccount from "@/features/user/UpdateAccount"
-import PublishVideo from "@/features/videos/PublishVideo"
+import UserPage from "@/features/user/components/UserPage"
+import UpdateAccount from "@/features/user/components/UpdateAccount"
+import PublishVideo from "@/features/videos/components/PublishVideo"
 
 export default function AppRouter() {
     return (

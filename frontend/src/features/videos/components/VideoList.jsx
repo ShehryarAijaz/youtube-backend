@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getVideos } from "./api";
-import Video from "./Video";
+import { getVideos } from "@/features/videos/api";
+import Video from "@/features/videos/components/Video";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 

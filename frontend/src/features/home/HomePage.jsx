@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/store/auth";
-import VideoList from "@/features/videos/VideoList";
+import VideoList from "@/features/videos/components/VideoList";
 
 const HomePage = () => {
   const { user } = useAuthStore();
