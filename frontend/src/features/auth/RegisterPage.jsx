@@ -80,9 +80,9 @@ export default function RegisterPage() {
 
         try {
             const response = await registerUser(data)
-            console.log("Response: ", response)
             if (response && response.email) {
                 setUser(response)
+                localStorage.setItem("user", JSON.stringify(response))
                 navigate("/")
             }
         } catch (error) {
@@ -92,8 +92,6 @@ export default function RegisterPage() {
         }
 
     }
-
-    console.log("Form Data: ", formData)
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">

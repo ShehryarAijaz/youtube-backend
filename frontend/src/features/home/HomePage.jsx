@@ -1,13 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/store/auth";
 
 const HomePage = () => {
 
-    const navigate = useNavigate()
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    if (!user) {
-        navigate('/register')
-    }
+    const { user } = useAuthStore()
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">

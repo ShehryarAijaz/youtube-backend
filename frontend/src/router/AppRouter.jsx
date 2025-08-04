@@ -4,6 +4,7 @@ import RegisterPage from "@/features/auth/RegisterPage";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import HomePage from "@/features/home/HomePage"
 import Navbar from "@/features/navigation/Navbar"
+import UserPage from "@/features/user/UserPage"
 
 export default function AppRouter() {
     return (
@@ -14,6 +15,7 @@ export default function AppRouter() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/user" element={<UserPage />} />
             </Routes>
         </BrowserRouter>
         </ThemeProvider>

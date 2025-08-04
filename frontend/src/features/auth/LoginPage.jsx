@@ -37,17 +37,14 @@ export default function LoginPage() {
         setLoading(true)
 
         try {
-            console.log("Submitting login with formData:", formData)
             const response = await loginUser(formData)
-            console.log("loginUser response:", response)
             if (response && response.user) {
                 setUser(response.user)
-                console.log("User set in store, navigating to /")
+                localStorage.setItem("user", JSON.stringify(response.user))
                 try {
                     navigate("/")
-                    console.log("navigate('/') called")
-                } catch (navErr) {
-                    console.error("Error during navigate:", navErr)
+                } catch (error) {
+                    console.error("Error during navigate:", error)
                 }
             } else {
                 console.error("Login failed, response status:", response.status, "response:", response)
@@ -60,9 +57,6 @@ export default function LoginPage() {
             setLoading(false)
         }
     }
-
-    // Extra logs for debugging
-    console.log("formData", formData)
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
