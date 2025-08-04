@@ -10,24 +10,28 @@ import {
 } from "@/components/ui/navigation-menu"
 import { Button } from "@/components/ui/button"
 import { Link, useNavigate } from "react-router-dom"
-import api from "@/services/api"
 import { useAuthStore } from "@/store/auth"
+import { logoutUser } from "@/features/auth/api"
 
 const Navbar = () => {
 
     const { user, logout } = useAuthStore()
     const navigate = useNavigate()
 
-    const logoutUser = async () => {
-        await api.post("/users/logout")
-        logout()
-        localStorage.removeItem("user")
-        navigate("/login")
+    const handleLogout = async () => {
+        try {
+            await logoutUser()
+            logout()
+            localStorage.removeItem("user")
+            navigate("/login")
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return (
         <div className="flex justify-between items-center p-4 border-b-2">
-            <h1 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/")}>YouTube Clone</h1>
+            <h4 className="text-2xl font-bold cursor-pointer" onClick={() => navigate("/")}>YouTube Clone</h4>
             <div className="flex items-center gap-4">
                 {user && <NavigationMenu>
                     <NavigationMenuList>
@@ -39,7 +43,7 @@ const Navbar = () => {
                     </NavigationMenuList>
                 </NavigationMenu>}
                 {user ?
-                <Button variant="outline" onClick={logoutUser}>Logout</Button>
+                <Button variant="outline" onClick={handleLogout}>Logout</Button>
                 : <><Button variant="outline" asChild><Link to="/login">Login</Link></Button> 
                 <Button variant="outline" asChild><Link to="/register">Register</Link></Button></>}
                 <ModeToggle />

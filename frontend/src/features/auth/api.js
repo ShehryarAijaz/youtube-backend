@@ -48,3 +48,21 @@ export const registerUser = async (formData) => {
         }
     }
 }
+
+export const logoutUser = async () => {
+    try{
+        const response = await api.post('/users/logout')
+        if (response?.status === 200) {
+            localStorage.removeItem('user')
+            return response.data
+        } else {
+            throw new Error(response.data.message)
+        }
+    } catch (error) {
+        if (error?.message) {
+            throw new Error(error.message)
+        } else {
+            throw new Error('Logout failed')
+        }
+    }
+}

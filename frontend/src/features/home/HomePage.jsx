@@ -1,4 +1,5 @@
 import { useAuthStore } from "@/store/auth";
+import VideoList from "@/features/videos/VideoList";
 
 const HomePage = () => {
 
@@ -6,7 +7,11 @@ const HomePage = () => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            {user ? <h1 className="text-2xl font-bold">Welcome {user.fullName}</h1> : <h1 className="text-2xl font-bold">Please login or register to continue</h1>}
+            {user ? <div className="w-full h-full flex flex-col items-center justify-center">
+                <VideoList />
+            </div> : <div className="w-full h-full flex flex-col items-center justify-center">
+                <h1 className="text-2xl font-bold">Please login or register to continue</h1>
+            </div>}
         </div>
     )
 }

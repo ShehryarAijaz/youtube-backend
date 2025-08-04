@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/shared/ThemeProvider";
 import HomePage from "@/features/home/HomePage"
 import Navbar from "@/features/navigation/Navbar"
 import UserPage from "@/features/user/UserPage"
+import UpdateAccount from "@/features/user/UpdateAccount"
 
 export default function AppRouter() {
     return (
@@ -16,6 +17,7 @@ export default function AppRouter() {
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/user" element={<UserPage />} />
+                <Route path="/update-account" element={<UpdateAccount />} />
             </Routes>
         </BrowserRouter>
         </ThemeProvider>
