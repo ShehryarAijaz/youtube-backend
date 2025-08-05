@@ -32,6 +32,11 @@ const Navbar = () => {
       </h4>
       <div className="flex items-center gap-4">
         {user && (
+          <Button onClick={() => navigate("/publish-tweet")}>
+            Publish Tweet
+          </Button>
+        )}
+        {user && (
           <Button onClick={() => navigate("/publish-video")}>
             Publish Video
           </Button>
