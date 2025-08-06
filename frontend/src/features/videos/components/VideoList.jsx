@@ -14,7 +14,6 @@ const VideoList = () => {
     const fetchVideos = async () => {
       try {
         const response = await getVideos(query);
-        console.log("API Response:", response);
         setVideos(response.data?.videos || []);
       } catch (err) {
         console.error("Error fetching videos:", err.message);
@@ -26,11 +25,6 @@ const VideoList = () => {
 
     fetchVideos();
   }, [search]);
-
-  console.log("Videos", videos.length);
-  console.log("Loading", loading);
-  console.log("Query", query);
-  console.log("Search", search);
 
   if (loading) return <div>Loading...</div>;
 
