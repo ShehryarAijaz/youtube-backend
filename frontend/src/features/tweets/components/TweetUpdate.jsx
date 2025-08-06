@@ -9,17 +9,14 @@ import { useParams } from "react-router-dom";
 
 const TweetUpdate = () => {
   const { tweetId } = useParams();
-  console.log("Tweet ID: ", tweetId);
   const [formData, setFormData] = useState({
     content: "",
   });
   const [tweet, setTweet] = useState(null);
-  console.log("Tweet: ", tweet);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  console.log("Content: ", formData, typeof formData);
 
   useEffect(() => {
     if (success) {
@@ -38,7 +35,6 @@ const TweetUpdate = () => {
       if (response?.status === 200) {
           setTweet(response.data?.content);
           setFormData({ content: response.data?.content });
-          console.log("Tweet Response: ", response);
       } else {
         setError(response.message);
       }
