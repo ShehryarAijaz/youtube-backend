@@ -15,7 +15,6 @@ const TweetList = () => {
       const fetchTweets = async () => {
         try {
           const response = await getTweets(user._id);
-          console.log("Tweets API Response:", response);
           setTweets(response.data);
         } catch (err) {
           console.error("Error fetching tweets:", err.message);
@@ -27,9 +26,6 @@ const TweetList = () => {
       
       fetchTweets();
     }, []);
-
-    console.log("Tweets:", tweets);
-    console.log("User:", user);
 
       return (
         <div className="w-full">
