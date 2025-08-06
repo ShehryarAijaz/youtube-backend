@@ -1,40 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CheckCircle2Icon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { publishTweet } from "@/features/tweets/api";
 
 const TweetPublish = () => {
-  const [tweetContent, setTweetContent] = useState("");
+  const [formData, setFormData] = useState({
+    content: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [success, setSucess] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  console.log("Content: ", formData, typeof formData);
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => {
+        setSuccess(false);
+        setSuccessMessage("");
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
 
   const handleTweetSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
-    setSucess(false);
+    setSuccess(false);
 
     try {
-      const response = await publishTweet(tweetContent);
-      if (response.status === 201) {
+      const response = await publishTweet(formData);
+      if (response?.status === 201) {
         setError(null);
-        setSucess(true);
+        setSuccess(true);
+        setLoading(false);
+        setFormData({ content: "" });
         setSuccessMessage("Tweet published successfully!");
       }
     } catch (error) {
       setError(
-        error.response?.data?.message ||
-          "An error occurred while publishing the tweet."
+        error.message || "An error occurred while publishing the tweet."
       );
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleTweetChange = (e) => {
-    setTweetContent(e.target.value);
+    setFormData({ ...formData, content: e.target.value });
   };
 
   return (
@@ -48,11 +66,11 @@ const TweetPublish = () => {
             <Input
               type="text"
               placeholder="What's happening?"
-              value={tweetContent}
+              value={formData.content}
               onChange={handleTweetChange}
             />
-          {error && <p className="text-red-500">{error}</p>}
-            <Button type="submit" disabled={loading}>
+            {error && <p className="text-red-500">{error}</p>}
+            <Button className="mt-3" type="submit" disabled={loading}>
               {loading ? "Publishing..." : "Publish"}
             </Button>
           </form>

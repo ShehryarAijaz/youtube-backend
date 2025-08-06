@@ -58,7 +58,7 @@ const Navbar = () => {
           </Button>
         ) : (
           <>
-            <Button variant="outline" asChild>
+            <Button className={"cursor-pointer"} variant="outline" asChild>
               <Link to="/login">Login</Link>
             </Button>
             <Button variant="outline" asChild>
