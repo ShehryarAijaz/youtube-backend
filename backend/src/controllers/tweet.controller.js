@@ -92,10 +92,28 @@ const deleteTweet = asyncHandler( async(req, res) => {
     json(new ApiResponse(200, tweet, "Tweet deleted successfully"))
 } )
 
+const getTweet = asyncHandler( async(req, res) => {
+    const { tweetId } = req.params
+
+    if (!tweetId) {
+        throw new ApiError(400, "Tweet ID is required")
+    }
+
+    const tweet = await Tweet.findById(new mongoose.Types.ObjectId(tweetId))
+    
+    if (!tweet) {
+        throw new ApiError(404, "Tweet not found")
+    }
+
+    return res.status(200).
+    json(new ApiResponse(200, tweet, "Tweet fetched successfully"))
+} )
+
 export {
     createTweet,
     getUserTweets,
     updateTweet,
-    deleteTweet
+    deleteTweet,
+    getTweet
 }
 

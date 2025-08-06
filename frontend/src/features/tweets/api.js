@@ -23,3 +23,27 @@ export const getTweets = async (userId) => {
     throw new Error(error.message || "Failed to fetch tweets");
   }
 };
+
+export const updateTweet = async (tweetId, { content }) => {
+  try {
+    const response = await api.patch(`/tweets/update-tweet/${tweetId}`, { content });
+    if (response?.status === 200) {
+      return response;
+    } else {
+      throw new Error(response.message || "Failed to update tweet");
+    }
+  } catch (error) {
+    throw new Error(error.message || "Failed to update tweet");
+  }
+};
+
+export const getTweetById = async (tweetId) => {
+  try {
+    const response = await api.get(`/tweets/get-tweet/${tweetId}`)
+    if (response?.status === 200) {
+      return response
+    }
+  } catch (error) {
+    throw new Error(error.message || "Failed to fetch tweet");
+  }
+}
