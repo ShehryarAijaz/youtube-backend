@@ -14,7 +14,6 @@ const TweetPublish = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  console.log("Content: ", formData, typeof formData);
 
   useEffect(() => {
     if (success) {
