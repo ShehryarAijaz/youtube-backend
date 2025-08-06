@@ -21,7 +21,7 @@ const Navbar = () => {
       localStorage.removeItem("user");
       navigate("/login");
     } catch (error) {
-      console.log(error);
+      console.error("Error logging out: ", error);
     }
   };
 
