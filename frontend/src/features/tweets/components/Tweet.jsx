@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
-import TweetUpdate from './TweetUpdate';
+import React from 'react'
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
 const Tweet = ({ tweet }) => {
-    const [showUpdate, setShowUpdate] = useState(false);
     const navigate = useNavigate();
 
     const handleUpdate = () => {
-        setShowUpdate(true);
         navigate(`/update-tweet/${tweet._id}`);
     }
 
