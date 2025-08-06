@@ -60,7 +60,6 @@ function PublishVideo() {
 
     try {
       const response = await publishVideo(data);
-      console.log("Response", response);
       if (response?.status === 201) {
         setError(null);
         setSuccess(true);
@@ -69,7 +68,6 @@ function PublishVideo() {
         );
       }
     } catch (error) {
-      console.log("Error", error.message);
       setError(error.message);
     } finally {
       setLoading(false);
