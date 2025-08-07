@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/store/auth";
-import VideoList from "@/features/videos/components/VideoList";
+import VideoList from "@/features/videos/components/video/videoPreview/VideoList";
 import TweetList from "@/features/tweets/components/TweetList";
 
 const HomePage = () => {

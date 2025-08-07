@@ -2,20 +2,13 @@ version: '3.8'
 
 services:
   backend:
-    build: ./backend
-    container_name: backend
-    ports:
-      - "8000:8000"
-    env_file:
-      - ./backend/.env.local
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
 
   frontend:
-    build: ./frontend
-    container_name: frontend
-    ports:
-      - "5173:5173"
-    env_file:
-      - ./frontend/.env.local
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev  # 👈 overridden in prod
     depends_on:
       - backend
-    command: npm run dev -- --host

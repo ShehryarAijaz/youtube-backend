@@ -6,7 +6,7 @@ import HomePage from "@/features/home/HomePage"
 import Navbar from "@/features/navigation/Navbar"
 import UserPage from "@/features/user/components/UserPage"
 import UpdateAccount from "@/features/user/components/UpdateAccount"
-import PublishVideo from "@/features/videos/components/PublishVideo"
+import PublishVideo from "@/features/videos/components/video/videoPreview/PublishVideo"
 import PublishTweet from "@/features/tweets/components/TweetPublish"
 import TweetUpdate from "@/features/tweets/components/TweetUpdate"
 
