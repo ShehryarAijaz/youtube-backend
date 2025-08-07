@@ -1,17 +1,37 @@
 import React from 'react'
-import VideoPlayer from './VideoPlayer'
-import { useParams } from 'react-router-dom'
+import VideoPlayer from '@/features/videos/components/video/videoPlayer/VideoPlayer'
+import VideoInfo from '@/features/videos/components/video/videoPlayer/VideoInfo'
+import CommentSection from '@/features/videos/components/video/videoPlayer/CommentSection'
+import VideoSidebar from '@/features/videos/components/video/videoPlayer/VideoSidebar'
 
 const VideoWatchPage = () => {
-    const { videoId } = useParams()
-
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-        <div className="flex w-full">
-            <div className="sticky top-[64px] left-0 w-[900px] max-w-full bg-black rounded-lg shadow-lg mt-2 ml-4 z-10">
-                <VideoPlayer videoId={videoId} />
+    <div className="min-h-screen  ">
+      {/* Main container */}
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex flex-col lg:flex-row gap-6">
+          {/* Left column - Video player and info */}
+          <div className="flex-1 lg:max-w-[calc(100%-400px)]">
+            {/* Video player container */}
+            <div className="bg-black rounded-lg overflow-hidden shadow-lg mb-4">
+              <VideoPlayer />
             </div>
+            
+            {/* Video info section */}
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+              <VideoInfo />
+            </div>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+              <CommentSection />
+            </div>
+          </div>
+          
+          {/* Right column - Recommended videos */}
+          <div className="lg:w-80 flex-shrink-0">
+            <VideoSidebar />
+          </div>
         </div>
+      </div>
     </div>
   )
 }

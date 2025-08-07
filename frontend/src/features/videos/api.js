@@ -40,3 +40,14 @@ export const getVideoById = async (videoId) => {
     throw new Error(error.message || "Failed to fetch video")
   }
 }
+
+export const getCommentsByVideoId = async (videoId, pageAndLimit) => {
+  try {
+    const response = await api.get(`/comments/get-comments/${videoId}?page=${pageAndLimit.page}&limit=${pageAndLimit.limit}`)
+    if (response?.status === 200) {
+      return response
+    }
+  } catch (error) {
+    throw new Error(error.message || "Failed to fetch comments")
+  }
+}

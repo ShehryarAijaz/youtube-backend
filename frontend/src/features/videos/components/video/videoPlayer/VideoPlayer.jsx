@@ -11,7 +11,6 @@ const VideoPlayer = () => {
         const fetchVideo = async () => {
             try {
                 const response = await getVideoById(videoId)
-                console.log("response", response.data)
                 setVideo(response.data)
             } catch (error) {
                 console.error("Error fetching video:", error.message)
@@ -21,14 +20,18 @@ const VideoPlayer = () => {
     }, [])
     
   return (
-    <div>
+    <div className="relative w-full">
+      <div className="relative aspect-video">
         <video
             src={video?.videoFile}
             poster={video?.thumbnail}
             controls
-            width="100%"
-            height="100%"
-        ></video>
+            className="w-full h-full object-cover rounded-lg"
+            preload="metadata"
+        >
+          Your browser does not support the video tag.
+        </video>
+      </div>
     </div>
   )
 }
