@@ -27,3 +27,16 @@ export const publishVideo = async (formData) => {
     throw new Error(error.message || "Failed to publish video");
   }
 };
+
+export const getVideoById = async (videoId) => {
+  try{
+    const response = await api.get(`/videos/get-video/${videoId}`)
+    if (response?.status === 200) {
+      return response
+    } else {
+      throw new Error(response.message || "Failed to fetch video")
+    }
+  } catch (error) {
+    throw new Error(error.message || "Failed to fetch video")
+  }
+}

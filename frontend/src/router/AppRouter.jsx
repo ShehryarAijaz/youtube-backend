@@ -9,6 +9,7 @@ import UpdateAccount from "@/features/user/components/UpdateAccount"
 import PublishVideo from "@/features/videos/components/video/videoPreview/PublishVideo"
 import PublishTweet from "@/features/tweets/components/TweetPublish"
 import TweetUpdate from "@/features/tweets/components/TweetUpdate"
+import VideoWatchPage from "@/features/videos/components/video/videoPlayer/VideoWatchPage"
 
 export default function AppRouter() {
     return (
@@ -24,6 +25,7 @@ export default function AppRouter() {
                 <Route path="/publish-video" element={<PublishVideo />} />
                 <Route path="/publish-tweet" element={<PublishTweet />} />
                 <Route path="/update-tweet/:tweetId" element={<TweetUpdate />} />
+                <Route path="/watch/:videoId" element={<VideoWatchPage />} />
             </Routes>
         </BrowserRouter>
         </ThemeProvider>
